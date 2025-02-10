@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function FileUpload({setImages}) {
+function FileUpload({setImages,imageList}) {
 
   const [imagePreview, setImagePreview]=useState([]);
   const handleFileUpload=(event) => {
@@ -36,6 +36,14 @@ function FileUpload({setImages}) {
                   </div>   
             ))}
        </div>
+       {imageList&& <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 
+       lg:grid-cols-7 xl:grid-cols-10 gap-3'>
+             {imageList.map((image,index)=>(
+                  <div key={index}>
+                    <img src={image?.url} width={100} height={100} className='rounded-lg object-cover h-[100px] w-[100px]' alt={index}/>
+                  </div>   
+            ))}
+       </div>}
     </div>
 
   )
