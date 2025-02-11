@@ -15,11 +15,11 @@ function ListingMapView() {
         const {data,error}=await supabase
         .from("listing")
         .select(`*, listingImages(url,listing_id)`)
-        
+        .eq('active',true)
 
         if(data){
-            console.log(data);
-            setListing(data);
+            setListing(data)
+
         }
         if(error){
             toast('serverside error')

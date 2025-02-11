@@ -5,15 +5,17 @@ function Listing({listing}) {
 
   return (
     <div>
-        <div>
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
             {listing.map((item,index)=>{
                 <div>
                     <Image src={item.listingImages[0].url}
                     width={800}
                     height={150}
                     className='rounded-lg object-cover h-[150px]'
-                    alt='listing images'
                     />
+                    <div>
+                        <h2></h2>
+                    </div>
                 </div>
             })}
         </div>
