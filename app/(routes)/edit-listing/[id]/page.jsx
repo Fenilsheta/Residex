@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Formik } from "formik"
-import { usePathname, useRouter } from "next/navigation"
+import { useParams, usePathname, useRouter } from "next/navigation"
 import { supabase } from "utils/supabase/client"
 import { toast } from "sonner"
 import { useUser } from "@clerk/nextjs"

@@ -1,10 +1,10 @@
 import Image from "next/image";
+import ListingMapView from "./_components/ListingMapView";
 
 export default function Home() {
   return (
-    <div>
-      {/* <h2>Let's Build Conn</h2>
-      <Button>Click Me</Button> */}
+    <div className="p-10">
+      <ListingMapView type='Sell' />
       
     </div>
   );

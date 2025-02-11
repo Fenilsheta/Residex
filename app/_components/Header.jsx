@@ -18,7 +18,7 @@ function Header() {
       <div className='flex gap-12 items-center'>
         <Image src={'/logo.svg'} width={150} height={150} alt='logo' />
         <ul className='hidden md:flex gap-10'>
-          <li className='hover:text-primary font-medium text-sm cursor-pointer'>For Sale</li>
+          <li className='hover:text-primary font-medium text-sm cursor-pointer'>For Sell</li>
           <li className='hover:text-primary font-medium text-sm cursor-pointer'>For Rent</li>
           <li className='hover:text-primary font-medium text-sm cursor-pointer'>Agent Finder</li>
         </ul>
