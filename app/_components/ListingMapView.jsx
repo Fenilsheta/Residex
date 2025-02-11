@@ -4,7 +4,7 @@ import Listing from "../_components/Listing"
 import { supabase } from 'utils/supabase/client'
 import { toast } from 'sonner';
 
-function ListingMapView({type}) {
+function ListingMapView() {
 
     const [listing, setListing]=useState([]);
     useEffect(() =>{
@@ -13,12 +13,9 @@ function ListingMapView({type}) {
 
     const getLatestlisting=async()=>{
         const {data,error}=await supabase
-        .from('listing')
-        .select(`*, listingImages(
-            url,listing_id
-            )`)
-        .eq('active',true)
-        .eq('type',type)
+        .from("listing")
+        .select(`*, listingImages(url,listing_id)`)
+        
 
         if(data){
             console.log(data);

@@ -8,10 +8,11 @@ function Listing({listing}) {
         <div>
             {listing.map((item,index)=>{
                 <div>
-                    <Image src={item.listImages[0].url}
+                    <Image src={item.listingImages[0].url}
                     width={800}
                     height={150}
                     className='rounded-lg object-cover h-[150px]'
+                    alt='listing images'
                     />
                 </div>
             })}
