@@ -4,9 +4,10 @@ import React, { useState } from 'react'
 import GoogleAddressSearch from './GoogleAddressSearch'
 import { Button } from '@/components/ui/button'
 import FilterSection from "./FilterSection"
+import Link from 'next/link'
 
 
-function Listing({listing,handleSearchClick,searchedAddress,setBedCount,setBathCount,setParkingCount,setHomeType}) {
+function Listing({listing,handleSearchClick,searchedAddress,setBedCount,setBathCount,setParkingCount,setHomeType,setCoordinates}) {
 
     const [address,setAddress]=useState();
 
@@ -15,7 +16,7 @@ function Listing({listing,handleSearchClick,searchedAddress,setBedCount,setBathC
             <div className='p-3 flex gap-6'>
             <GoogleAddressSearch
             selectedAddress={(v)=>{searchedAddress(v);setAddress(v)}}
-            setCoordinates={(v)=>console.log(v)}
+            setCoordinates={setCoordinates}
             />
             <Button className='flex gap-2'
             onClick={handleSearchClick}>
@@ -34,10 +35,11 @@ function Listing({listing,handleSearchClick,searchedAddress,setBedCount,setBathC
                 <h2 className='text-xl'>  Found <span className='font-bold'>{listing?.length}</span> Result in <span className='text-primary font-bold'> {address?.label} </span></h2>
             </div>}
 
-            <div  className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 {listing?.length>0? listing.map((item, index) => {
 
                     return (
+                        <Link href={'/view-listing/' +item?.id}>
                         <div key={index} className='p-3 hover:border hover:border-primary cursor-pointer rounded-lg '>
                             <Image src={item.listingImages[0].url}
                                 width={800}
@@ -68,6 +70,7 @@ function Listing({listing,handleSearchClick,searchedAddress,setBedCount,setBathC
                                 </div>
                             </div>
                         </div>
+                        </Link>
                     )
                 })
             :[1,2,3,4,5,6,7,8].map((item,index) =>(

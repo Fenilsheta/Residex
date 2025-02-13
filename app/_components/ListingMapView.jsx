@@ -13,6 +13,7 @@ function ListingMapView({type}) {
     const [bathCount,setBathCount]=useState(0);
     const [parkingCount,setParkingCount]=useState(0);
     const [homeType,setHomeType]=useState(0);
+    const [coordinates,setCoordinates]=useState(0);
 
     useEffect(() =>{
         getLatestlisting();
@@ -75,11 +76,15 @@ function ListingMapView({type}) {
             setBathCount={setBathCount}
             setParkingCount={setParkingCount}
             setHomeType={setHomeType}
+            setCoordinates={setCoordinates}
             />
         </div>
 
-        <div className='fixed right-10 h-full md:w-[350px] lg:w-[650px]'>
-            <GoogleMapSection/>
+        <div className='fixed right-10 h-full md:w-[350px] lg:w-[450px] xl:w-[630px]'>
+            <GoogleMapSection
+            listing={listing}
+            coordinates={coordinates}
+            />
         </div>
     </div>
   )
