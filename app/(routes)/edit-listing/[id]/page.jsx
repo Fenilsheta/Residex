@@ -33,9 +33,10 @@ import {
 
 
 
-function EditListing({ params }) {
+function EditListing() {
 
 
+    const params=useParams();
     const { user } = useUser();
     const router = useRouter();
     const [listing, setListing] = useState([]);
@@ -45,6 +46,7 @@ function EditListing({ params }) {
     useEffect(() => {
         // console.log(params.split('/')[2]);
         user && verifyUserRecord();
+        
     }, [user]);
 
     const verifyUserRecord = async () => {
@@ -90,6 +92,7 @@ function EditListing({ params }) {
 
             if (error) {
                 setLoading(false);
+                console.error(error);
                 toast('Error while uploading images')
             }
             else {

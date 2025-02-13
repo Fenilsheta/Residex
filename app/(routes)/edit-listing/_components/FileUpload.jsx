@@ -24,7 +24,7 @@ function FileUpload({setImages,imageList}) {
         <input id="dropzone-file" type="file"
           multiple className="hidden"
           onChange={handleFileUpload} 
-          accept="image/jpeg, image/gif, image/png, image/jpg "
+          accept="image/jpeg, image/gif, image/PNG, image/jpg "
           />
       </label>
     </div>

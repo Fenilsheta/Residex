@@ -4,6 +4,15 @@ const nextConfig = {
     experimental: {
       appDir: true,  // Ensure this is enabled for Next.js 13+
     },
+    images: {
+      domains: ["bfdmxfdukysnmuxdybpc.supabase.co"], // Replace with your actual Supabase project domain
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "**.supabase.co",
+        },
+      ],
+    },
   };
   
 export default nextConfig;
