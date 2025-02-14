@@ -48,6 +48,7 @@ function GoogleMapSection({coordinates,listing}) {
           zoom={12}
           onLoad={onLoad}
           onUnmount={onUnmount}
+          gestureHandling="greedy"
         >
           {/* Child components, such as markers, info windows, etc. */}
           {listing.map((item,index)=>(

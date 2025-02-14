@@ -76,6 +76,9 @@ function Details({listingDetail}) {
       </div>
        
        <div>
+        
+       <h2 className='text-2xl font-bold'>Contact Agent</h2>
+
         <AgentDetail listingDetail={listingDetail}/>
        </div>
 
