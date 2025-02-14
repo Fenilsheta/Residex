@@ -11,14 +11,14 @@ import Image from 'next/image'
 function Slider({imageList}) {
     return (
         <div>
-           {imageList&& <Carousel>
+           {imageList? <Carousel>
                 <CarouselContent>
                     {imageList.map((item,index)=>(
-                        <CarouselItem><Image src={item.url} width={800} height={300}/> </CarouselItem>
+                        <CarouselItem>
+                            <Image src={item.url} width={800} height={300} 
+                            alt='image' className='rounded-xl object-cover w-full h-[360px]'/> 
+                        </CarouselItem>
                     ))}
-                    
-                    <CarouselItem>...</CarouselItem>
-                    <CarouselItem>...</CarouselItem>
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
