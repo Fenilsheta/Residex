@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from '@/components/ui/button';
 import { Bath,BedDouble,CarFront,Drill,Home,LandPlot,MapPin,Share } from 'lucide-react';
 import GoogleMapSection from 'app/_components/GoogleMapSection';
+import AgentDetail from './AgentDetail';
 
 function Details({listingDetail}) {
   return listingDetail&&(
@@ -75,7 +76,7 @@ function Details({listingDetail}) {
       </div>
        
        <div>
-
+        <AgentDetail listingDetail={listingDetail}/>
        </div>
 
     </div>

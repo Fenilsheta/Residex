@@ -1,4 +1,4 @@
-import { SignIn } from '@clerk/nextjs'
+import { SignIn, UserButton } from '@clerk/nextjs'
 
 export default function Page() {
   return (
@@ -73,7 +73,18 @@ export default function Page() {
           </p>
         </div>
 
-        <SignIn />
+        <SignIn 
+        appearance={{
+          // layout: {
+          //   socialButtonsPlacement: "bottom",
+          //   logoPlacement: "none",
+          //   helpPageUrl: "",
+          // },
+          elements: {
+            footer: "hidden", // Hides "Secured by Clerk"
+          },
+        }}/>
+        
       </div>
     </main>
   </div>
