@@ -70,3 +70,8 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.cl-internal-17dpwu0{
+  border: 1px solid gray;
+  box-shadow: none;
+}

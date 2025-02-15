@@ -55,7 +55,9 @@ function Header() {
             <DropdownMenuContent>
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href={'/user'}>Profile</Link> 
+                </DropdownMenuItem>
               <DropdownMenuItem>My Listing</DropdownMenuItem>
               <DropdownMenuItem> <SignOutButton>Logout</SignOutButton></DropdownMenuItem>
             </DropdownMenuContent>
