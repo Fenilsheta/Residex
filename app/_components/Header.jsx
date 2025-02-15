@@ -58,7 +58,7 @@ function Header() {
               <DropdownMenuItem>
                 <Link href={'/user'}>Profile</Link> 
                 </DropdownMenuItem>
-              <DropdownMenuItem>My Listing</DropdownMenuItem>
+              <DropdownMenuItem >My Listing</DropdownMenuItem>
               <DropdownMenuItem> <SignOutButton>Logout</SignOutButton></DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
