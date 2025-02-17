@@ -50,7 +50,7 @@ function AddNewListing() {
         {
           address: selectedAddress.label,
           coordinates: coordinates,
-          adminId: user?.primaryEmailAddress?.emailAddress, // ✅ Save admin email as reference
+          createdBy: user?.primaryEmailAddress?.emailAddress, // ✅ Save admin email as reference
           active: false,
           created_at: new Date().toISOString(),
         },
@@ -60,10 +60,11 @@ function AddNewListing() {
     if (data) {
       setLoader(false);
       toast("New property added successfully.");
-      router.push("/dashboard"); // Redirect to admin dashboard
+      router.push("/edit-listing/"+data[0].id); // Redirect to admin dashboard
     }
     if (error) {
       setLoader(false);
+      console.log(error)
       toast("Server error! Unable to add property.");
     }
   };
