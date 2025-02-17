@@ -12,7 +12,7 @@ export default function Page() {
         content='cover'
         width={800}
         // height={200}
-        src="https://img.freepik.com/premium-photo/windows-skyscraper-business-office-corporate-building-london-city-england-uk_117856-1552.jpg?ga=GA1.1.1853483278.1739444565&semt=ais_hybrid"
+        src="https://img.freepik.com/free-photo/twilight-view-mumbai-cityscape-purple-hues-showing-lot-construction-residential-commercial-skyscrapers-highrises_469504-17.jpg?ga=GA1.1.1853483278.1739444565&semt=ais_hybrid"
         className="absolute inset-0 h-full w-full object-cover opacity-80"
       />
 
