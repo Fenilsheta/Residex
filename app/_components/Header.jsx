@@ -57,6 +57,14 @@ function Header() {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      (async () => {
+        await fetchUserRole();
+        await fetchUserListingCount();
+      })();
+    }
+  }, [user]);
   /** ✅ Determine If User Can Post a Listing */
   useEffect(() => {
     if (userRole === "admin") {

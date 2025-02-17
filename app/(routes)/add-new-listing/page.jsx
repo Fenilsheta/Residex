@@ -34,7 +34,7 @@ function AddNewListing() {
       setIsAdmin(true); // ✅ User is admin
     } else {
       setIsAdmin(false);
-      toast("Unauthorized: Only admins can add properties.");
+      toast("Unauthorized: Only Authorised People can add properties.");
       router.push("/"); // Redirect unauthorized users
     }
   };
@@ -64,8 +64,12 @@ function AddNewListing() {
     }
     if (error) {
       setLoader(false);
-      console.log(error)
       toast("Server error! Unable to add property.");
+    }
+
+    if ((userRole === "user" && count >= 1) || (userRole === "agent" && count >= 10)) {
+      toast("You have reached your listing limit.");
+      return;
     }
   };
 
