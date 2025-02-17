@@ -75,7 +75,7 @@ function UserListing() {
                     :'/placeholder.svg'
                 }
                     width={800}
-                    height={150}
+                    height={180}
                     alt='images'
                     unoptimized={true}
                     className='rounded-lg object-cover h-[170px]'
