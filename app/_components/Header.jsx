@@ -63,7 +63,7 @@ function Header() {
       .single();
 
     if (adminError || !adminData) {
-      console.error("Error fetching admin ID:", adminError);
+      console.log("Error fetching admin ID:", adminError);
       return;
     }
 
