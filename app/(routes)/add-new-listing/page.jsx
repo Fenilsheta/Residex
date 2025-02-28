@@ -12,35 +12,69 @@ function AddNewListing() {
   const [coordinates, setCoordinates] = useState();
   const { user } = useUser();
   const [loader, setLoader] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+  const [listingCount, setListingCount] = useState(0);
   const router = useRouter();
 
-  // ✅ Call admin check when user is available
+  /** ✅ Fetch User Role & Listing Count */
   useEffect(() => {
     if (user) {
-      checkAdminRole();
+      fetchUserRole();
+      fetchUserListingCount();
     }
-  }, [user]); // Re-run if user changes
+  }, [user]);
 
-  // ✅ Check if user is an admin
-  const checkAdminRole = async () => {
+  /** ✅ Fetch User Role */
+  const fetchUserRole = async () => {
     const { data, error } = await supabase
-      .from("admin")
-      .select("id")
+      .from("admin") // Ensure this table has a role column
+      .select("role")
       .eq("email", user?.primaryEmailAddress?.emailAddress)
       .single();
 
+    if (error) {
+      console.error("Error fetching user role:", error);
+      return;
+    }
+
     if (data) {
-      setIsAdmin(true); // ✅ User is admin
+      setUserRole(data.role);
     } else {
-      setIsAdmin(false);
-      toast("Unauthorized: Only Authorised People can add properties.");
-      router.push("/"); // Redirect unauthorized users
+      setUserRole("user"); // Default to "user"
     }
   };
 
+  /** ✅ Fetch Count of Listings the User Has */
+  const fetchUserListingCount = async () => {
+    const { count, error } = await supabase
+      .from("listing")
+      .select("*", { count: "exact", head: true })
+      .eq("createdBy", user?.primaryEmailAddress?.emailAddress);
+
+    if (error) {
+      console.error("Error fetching listing count:", error);
+      return;
+    }
+
+    if (count !== null) {
+      setListingCount(count);
+    }
+  };
+
+  /** ✅ Check if User Can Post a Listing */
+  const canPostListing = () => {
+    if (userRole === "admin") return true; // ✅ Admin can post unlimited
+    if (userRole === "agent" && listingCount < 10) return true; // ✅ Agent can post 10
+    if (userRole === "user" && listingCount < 1) return true; // ✅ User can post 1
+    return false; // 🚫 Otherwise, they cannot post
+  };
+
+  /** ✅ Handle Adding New Listing */
   const nextHandler = async () => {
-    if (!isAdmin) return; // ✅ Extra safety check
+    if (!canPostListing()) {
+      toast("You have reached your listing limit.");
+      return;
+    }
 
     setLoader(true);
 
@@ -48,32 +82,33 @@ function AddNewListing() {
       .from("listing")
       .insert([
         {
-          address: selectedAddress.label,
+          address: selectedAddress?.label,
           coordinates: coordinates,
-          createdBy: user?.primaryEmailAddress?.emailAddress, // ✅ Save admin email as reference
+          createdBy: user?.primaryEmailAddress?.emailAddress, // ✅ Track property owner
           active: false,
           created_at: new Date().toISOString(),
         },
       ])
       .select();
 
-    if (data) {
-      setLoader(false);
-      toast("New property added successfully.");
-      router.push("/edit-listing/"+data[0].id); // Redirect to admin dashboard
-    }
     if (error) {
       setLoader(false);
       toast("Server error! Unable to add property.");
-    }
-
-    if ((userRole === "user" && count >= 1) || (userRole === "agent" && count >= 10)) {
-      toast("You have reached your listing limit.");
       return;
     }
+
+    // ✅ Update user's listing count in the admin table
+    await supabase
+      .from("admin")
+      .update({ listing_count: listingCount + 1 }) // Increment count
+      .eq("email", user?.primaryEmailAddress?.emailAddress);
+
+    setLoader(false);
+    toast("New property added successfully.");
+    router.push("/edit-listing/" + data[0].id); // ✅ Redirect after posting
   };
 
-  return isAdmin ? (
+  return canPostListing() ? (
     <div className="mt-10 md:mx-56 lg:mx-80">
       <div className="p-10 flex flex-col gap-5 items-center justify-center">
         <h2 className="font-bold text-2xl">Add New Listing</h2>
@@ -96,7 +131,13 @@ function AddNewListing() {
         </div>
       </div>
     </div>
-  ) : null;
+  ) : (
+    <div className="mt-10 text-center">
+      <h2 className="text-red-500 font-bold text-xl">
+        You have reached your listing limit.
+      </h2>
+    </div>
+  );
 }
 
 export default AddNewListing;

@@ -25,8 +25,12 @@ function Header() {
 
   useEffect(() => {
     if (user) {
-      fetchUserRole();
-      fetchUserListingCount();
+      (async () => {
+        await fetchUserRole();
+        if (userRole !== "admin") {
+          await fetchUserListingCount(); // ✅ Skip fetching count for admins
+        }
+      })();
     }
   }, [user]);
 
@@ -41,15 +45,16 @@ function Header() {
     if (data) {
       setUserRole(data.role);
     } else {
-      setUserRole("user"); // Default role if not found
+      setUserRole("user"); 
     }
   };
 
-  /** ✅ Fetch Count of Listings User Has Posted */
   const fetchUserListingCount = async () => {
+    if (userRole === "admin") return; 
+
     const { count, error } = await supabase
       .from("listing")
-      .select("*", { count: "exact" })
+      .select("*", { count: "exact", head: true })
       .eq("createdBy", user?.primaryEmailAddress?.emailAddress);
 
     if (count !== null) {
@@ -57,24 +62,16 @@ function Header() {
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      (async () => {
-        await fetchUserRole();
-        await fetchUserListingCount();
-      })();
-    }
-  }, [user]);
   /** ✅ Determine If User Can Post a Listing */
   useEffect(() => {
     if (userRole === "admin") {
-      setCanPostListing(true); // Admin has no limit
+      setCanPostListing(true); // ✅ Admin can post unlimited
     } else if (userRole === "agent" && listingCount < 10) {
-      setCanPostListing(true); // Agents can post up to 10
+      setCanPostListing(true); // ✅ Agents can post up to 10
     } else if (userRole === "user" && listingCount < 1) {
-      setCanPostListing(true); // Regular users can post only 1
+      setCanPostListing(true); // ✅ Users can post only 1
     } else {
-      setCanPostListing(false); // Prevents posting
+      setCanPostListing(false); // 🚫 Prevents posting
     }
   }, [userRole, listingCount]);
 
