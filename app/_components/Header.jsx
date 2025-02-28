@@ -23,21 +23,18 @@ function Header() {
   const [listingCount, setListingCount] = useState(0);
   const [canPostListing, setCanPostListing] = useState(false);
 
+  /** ✅ Fetch User Role from Supabase */
   useEffect(() => {
     if (user) {
       (async () => {
         await fetchUserRole();
-        if (userRole !== "admin") {
-          await fetchUserListingCount(); // ✅ Skip fetching count for admins
-        }
       })();
     }
   }, [user]);
 
-  /** ✅ Fetch User Role from Supabase */
   const fetchUserRole = async () => {
     const { data, error } = await supabase
-      .from("admin") // Your table with roles
+      .from("admin")
       .select("role")
       .eq("email", user?.primaryEmailAddress?.emailAddress)
       .single();
@@ -49,29 +46,49 @@ function Header() {
     }
   };
 
+  /** ✅ Fetch Listing Count After Role is Set */
+  useEffect(() => {
+    if (user && userRole !== "admin") {
+      fetchUserListingCount();
+    }
+  }, [userRole]); 
+
   const fetchUserListingCount = async () => {
-    if (userRole === "admin") return; 
+    if (!user || userRole === "admin") return;
+
+    const { data: adminData, error: adminError } = await supabase
+      .from("admin")
+      .select("id")
+      .eq("email", user?.primaryEmailAddress?.emailAddress)
+      .single();
+
+    if (adminError || !adminData) {
+      console.error("Error fetching admin ID:", adminError);
+      return;
+    }
 
     const { count, error } = await supabase
       .from("listing")
       .select("*", { count: "exact", head: true })
-      .eq("createdBy", user?.primaryEmailAddress?.emailAddress);
+      .eq("createdby", adminData.id); // ✅ Use UUID instead of email
 
     if (count !== null) {
       setListingCount(count);
     }
   };
 
-  /** ✅ Determine If User Can Post a Listing */
+  /** ✅ Set Can Post Listing After Role & Count Are Set */
   useEffect(() => {
-    if (userRole === "admin") {
-      setCanPostListing(true); // ✅ Admin can post unlimited
-    } else if (userRole === "agent" && listingCount < 10) {
-      setCanPostListing(true); // ✅ Agents can post up to 10
-    } else if (userRole === "user" && listingCount < 1) {
-      setCanPostListing(true); // ✅ Users can post only 1
-    } else {
-      setCanPostListing(false); // 🚫 Prevents posting
+    if (userRole) {
+      if (userRole === "admin") {
+        setCanPostListing(true);
+      } else if (userRole === "agent" && listingCount < 10) {
+        setCanPostListing(true);
+      } else if (userRole === "user" && listingCount < 1) {
+        setCanPostListing(true);
+      } else {
+        setCanPostListing(false);
+      }
     }
   }, [userRole, listingCount]);
 
