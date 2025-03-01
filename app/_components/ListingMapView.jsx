@@ -34,6 +34,7 @@ function ListingMapView({type}) {
 
         }
         if(error){
+            console.log(error);
             toast('serverside error')
         }
         
