@@ -35,7 +35,7 @@ function Listing({listing,handleSearchClick,searchedAddress,setBedCount,setBathC
                 <h2 className='text-xl'>  Found <span className='font-bold'>{listing?.length}</span> Result in <span className='text-primary font-bold'> {address?.label} </span></h2>
             </div>}
 
-            <div  className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 {listing?.length>0? listing.map((item, index) => {
 
                     return (
