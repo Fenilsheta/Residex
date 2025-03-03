@@ -24,53 +24,75 @@ function Header() {
   const [listingCount, setListingCount] = useState(0);
   const [canPostListing, setCanPostListing] = useState(false);
 
+  /** ✅ Fetch or Create User */
   useEffect(() => {
     if (user) {
-      fetchUserData();
+      fetchOrCreateUser();
     }
   }, [user]);
 
-  const fetchUserData = async () => {
+  const fetchOrCreateUser = async () => {
+    if (!user) return;
+
+    // ✅ Check if user exists in the "admin" table
     const { data, error } = await supabase
       .from("admin")
       .select("id, role, listing_count")
       .eq("email", user?.primaryEmailAddress?.emailAddress)
       .single();
 
-    if (error || !data) {
-      console.error("❌ Error fetching user data:", error);
-      setUserRole("user");
-      setListingCount(0);
-      setCanPostListing(false);
-      return;
-    }
+    if (error) {
+      console.warn("🔍 User not found, inserting new user as 'user' role...");
 
-    console.log("✅ Updated User Data Fetched:", data);
-    setUserRole(data.role);
-    setListingCount(data.listing_count);
-    checkCanPost(data.role, data.listing_count);
+      // ✅ Insert user ONLY if not found
+      const { data: newUser, error: insertError } = await supabase
+        .from("admin")
+        .insert([
+          {
+            email: user?.primaryEmailAddress?.emailAddress,
+            role: "user", // Default role
+            listing_count: 0,
+            
+          },
+        ])
+        .select()
+        .single();
+
+      if (insertError) {
+        console.error("❌ Error creating user:", insertError);
+        return;
+      }
+
+      console.log("✅ New user added:", newUser);
+      setUserRole(newUser.role);
+      setListingCount(newUser.listing_count);
+      checkCanPost(newUser.role, newUser.listing_count);
+    } else {
+      console.log("✅ Existing user found:", data);
+      setUserRole(data.role);
+      setListingCount(data.listing_count);
+      checkCanPost(data.role, data.listing_count);
+    }
   };
 
+  /** ✅ Check If User Can Post Listing */
   const checkCanPost = (role, count) => {
-    console.log(`Checking permissions for role: ${role}, listing count: ${count}`);
-
     if (role === "admin") {
       setCanPostListing(true);
-    } else if (role === "agent") {
-      setCanPostListing(count < 10);
-    } else if (role === "user") {
-      setCanPostListing(count < 1);
+    } else if (role === "agent" && count < 10) {
+      setCanPostListing(true);
+    } else if (role === "user" && count < 1) {
+      setCanPostListing(true);
     } else {
       setCanPostListing(false);
     }
-
-    console.log("🚀 Updated Can Post Listing:", canPostListing);
   };
 
+  /** ✅ Handle Button Click */
   const handlePostClick = (e) => {
     if (!canPostListing) {
       e.preventDefault();
-      toast.error("🚫 You have reached your listing limit!");
+      toast.error("You have reached your listing limit!");
     }
   };
 
