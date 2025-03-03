@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { supabase } from "utils/supabase/client";
+import { toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,77 +21,62 @@ function Header() {
   const path = usePathname();
   const { user, isSignedIn } = useUser();
   const [userRole, setUserRole] = useState(null);
-  const [listingCount, setListingCount] = useState(0);
+  const [listingCount, setListingCount] = useState(null);
   const [canPostListing, setCanPostListing] = useState(false);
 
-  /** ✅ Fetch User Role from Supabase */
+  /** ✅ Fetch User Role & Listing Count */
   useEffect(() => {
     if (user) {
-      (async () => {
-        await fetchUserRole();
-      })();
+      fetchUserData();
     }
-  }, [user]);
+  }, [user]); // Ensure it runs when `user` updates.
 
-  const fetchUserRole = async () => {
+  const fetchUserData = async () => {
     const { data, error } = await supabase
       .from("admin")
-      .select("role")
+      .select("id, role, listing_count")
       .eq("email", user?.primaryEmailAddress?.emailAddress)
       .single();
 
-    if (data) {
-      setUserRole(data.role);
-    } else {
-      setUserRole("user"); 
-    }
-  };
-
-  /** ✅ Fetch Listing Count After Role is Set */
-  useEffect(() => {
-    if (user && userRole !== "admin") {
-      fetchUserListingCount();
-    }
-  }, [userRole]); 
-
-  const fetchUserListingCount = async () => {
-    if (!user || userRole === "admin") return;
-
-    const { data: adminData, error: adminError } = await supabase
-      .from("admin")
-      .select("id")
-      .eq("email", user?.primaryEmailAddress?.emailAddress)
-      .single();
-
-    if (adminError || !adminData) {
-      console.log("Error fetching admin ID:", adminError);
+    if (error || !data) {
+      console.error("❌ Error fetching user data:", error);
+      setUserRole("user");
+      setListingCount(0);
+      setCanPostListing(false);
       return;
     }
 
-    const { count, error } = await supabase
-      .from("listing")
-      .select("*", { count: "exact", head: true })
-      .eq("createdby", adminData.id); // ✅ Use UUID instead of email
+    console.log("✅ User Data Fetched:", data);
 
-    if (count !== null) {
-      setListingCount(count);
-    }
+    setUserRole(data.role);
+    setListingCount(data.listing_count);
+    checkCanPost(data.role, data.listing_count);
   };
 
-  /** ✅ Set Can Post Listing After Role & Count Are Set */
-  useEffect(() => {
-    if (userRole) {
-      if (userRole === "admin") {
-        setCanPostListing(true);
-      } else if (userRole === "agent" && listingCount < 10) {
-        setCanPostListing(true);
-      } else if (userRole === "user" && listingCount < 1) {
-        setCanPostListing(true);
-      } else {
-        setCanPostListing(false);
-      }
+  const checkCanPost = (role, count) => {
+    console.log(`Checking permissions for role: ${role}, listing count: ${count}`);
+    
+    if (role === "admin") {
+      setCanPostListing(true); // ✅ Admins can always post
+    } else if (role === "agent") {
+      setCanPostListing(count < 10); // ✅ Agents can post if they have less than 10
+    } else if (role === "user") {
+      setCanPostListing(count < 1); // ✅ Users can post if they have 0 listings
+    } else {
+      setCanPostListing(false); // 🚫 Otherwise, prevent posting
     }
-  }, [userRole, listingCount]);
+  
+    console.log("🚀 Updated Can Post Listing:", count < 1 ? true : false);
+  };
+  
+
+  /** ✅ Prevent Navigation if User Reached Limit */
+  const handlePostClick = (e) => {
+    if (!canPostListing) {
+      e.preventDefault(); // Stop navigation
+      toast.error("🚫 You have reached your listing limit!");
+    }
+  };
 
   return (
     <div className="p-6 px-10 flex justify-between shadow-sm fixed top-0 w-full z-10 bg-white">
@@ -112,9 +98,8 @@ function Header() {
       </div>
 
       <div className="flex gap-2 items-center">
-        {/* ✅ Show "Post Your Ad" button only if user is allowed */}
-        {isSignedIn && canPostListing && (
-          <Link href={"/add-new-listing"}>
+        {isSignedIn && (
+          <Link href={canPostListing ? "/add-new-listing" : "#"} onClick={handlePostClick}>
             <Button className="flex gap-2">
               <Plus className="h-5 w-5" /> Post Your Ad
             </Button>
