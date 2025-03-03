@@ -4,7 +4,7 @@ import { SignOutButton, useUser } from "@clerk/nextjs";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { supabase } from "utils/supabase/client";
 import { toast } from "sonner";
@@ -20,13 +20,9 @@ import {
 function Header() {
   const path = usePathname();
   const { user, isSignedIn } = useUser();
-  const router = useRouter();
   const [userRole, setUserRole] = useState(null);
   const [listingCount, setListingCount] = useState(0);
   const [canPostListing, setCanPostListing] = useState(false);
-  const [loader, setLoader] = useState(false);
-  const [selectedAddress, setSelectedAddress] = useState();
-  const [coordinates, setCoordinates] = useState();
 
   useEffect(() => {
     if (user) {
@@ -49,7 +45,7 @@ function Header() {
       return;
     }
 
-    console.log("✅ User Data Fetched:", data);
+    console.log("✅ Updated User Data Fetched:", data);
     setUserRole(data.role);
     setListingCount(data.listing_count);
     checkCanPost(data.role, data.listing_count);
@@ -76,60 +72,6 @@ function Header() {
       e.preventDefault();
       toast.error("🚫 You have reached your listing limit!");
     }
-  };
-
-  const nextHandler = async () => {
-    if (!canPostListing) {
-      toast.error("🚫 You have reached your listing limit!");
-      return;
-    }
-
-    setLoader(true);
-
-    const { data: adminData, error: adminError } = await supabase
-      .from("admin")
-      .select("id, listing_count")
-      .eq("email", user?.primaryEmailAddress?.emailAddress)
-      .single();
-
-    if (adminError || !adminData) {
-      setLoader(false);
-      toast.error("Error fetching user ID.");
-      return;
-    }
-
-    const { data, error } = await supabase
-      .from("listing")
-      .insert([
-        {
-          address: selectedAddress?.label,
-          coordinates: coordinates,
-          createdby: adminData.id,
-          active: false,
-          created_at: new Date().toISOString(),
-        },
-      ])
-      .select();
-
-    if (error) {
-      setLoader(false);
-      toast.error("Server error! Unable to add property.");
-      return;
-    }
-
-    const updatedCount = adminData.listing_count + 1;
-
-    await supabase
-      .from("admin")
-      .update({ listing_count: updatedCount })
-      .eq("id", adminData.id);
-
-    setListingCount(updatedCount);
-    checkCanPost(userRole, updatedCount);
-
-    setLoader(false);
-    toast.success("🎉 New property added successfully!");
-    router.push("/edit-listing/" + data[0].id);
   };
 
   return (
