@@ -105,10 +105,12 @@ function EditListing() {
 
     const { data, error } = await supabase
       .from("listing")
-      .insert([{ ...formValue, createdBy: user?.primaryEmailAddress?.emailAddress }])
+      .update(formValue)
+      .eq('id', params.id)
       .select();
 
     if (error) {
+        console.log(error);
       setLoading(false);
       toast.error("❌ Error adding property.");
       return;
@@ -116,6 +118,41 @@ function EditListing() {
 
     console.log("✅ Listing Added:", data);
     toast.success("🎉 Property added successfully!");
+
+    for (const image of images) {
+        setLoading(true);
+        const file = image;
+        const fileName = Date.now().toString();
+        const fileExt = fileName.split('.').pop();
+        const { data, error } = await supabase.storage
+            .from('listingImages')
+            .upload(`${fileName}`, file, {
+                contentType: `image/${fileExt}`,
+                upsert: false
+            });
+
+        if (error) {
+            setLoading(false);
+            console.error(error);
+            toast('Error while uploading images')
+        }
+        else {
+            const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL + fileName;
+
+            const { data, error } = await supabase
+                .from('listingImages')
+                .insert([
+                    { url: imageUrl, listing_id: params?.id }
+                ])
+                .select();
+
+            if (error) {
+                setLoading(false);
+            }
+        }
+        setLoading(false);
+    }
+
 
     const updatedCount = listingCount + 1;
 
@@ -142,14 +179,12 @@ function EditListing() {
       .eq("id", params?.id)
       .select();
 
-    if (error) {
+    if (data) {
       setLoading(false);
-      toast.error("❌ Error publishing listing.");
-      return;
+      toast.success("🎉 Listing Published!");
     }
 
-    toast.success("🎉 Listing Published!");
-    setLoading(false);
+    
   };
 
   return (
@@ -165,7 +200,7 @@ function EditListing() {
 
             }}
             onSubmit={(values) => {
-                console.log(values);
+                
                 onSubmitHandler(values);
             }}
         >
@@ -211,17 +246,17 @@ function EditListing() {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Bedroom</h2>
-                                <input type="number" placeholder="Ex.2" name="bedroom" defaultValue={listing?.bedroom}
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="bedroom" defaultValue={listing?.bedroom}
                                     onChange={handleChange}
                                 />
                             </div>
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Bathroom</h2>
-                                <input type="number" placeholder="Ex.2" name="bathroom" defaultValue={listing?.bathroom} onChange={handleChange} />
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="bathroom" defaultValue={listing?.bathroom} onChange={handleChange} />
                             </div>
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Built In</h2>
-                                <input type="number" placeholder="Ex.1900 Sq.ft" name="builtIn" defaultValue={listing?.builtIn} onChange={handleChange} />
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex.1900 Sq.ft" name="builtIn" defaultValue={listing?.builtIn} onChange={handleChange} />
                             </div>
 
                         </div>
@@ -229,15 +264,15 @@ function EditListing() {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Parking</h2>
-                                <input type="number" placeholder="Ex.2" name="parking" defaultValue={listing?.parking} onChange={handleChange} />
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="parking" defaultValue={listing?.parking} onChange={handleChange} />
                             </div>
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Lot Size(Sq.Ft)</h2>
-                                <input type="number" placeholder="" name="lotSize" defaultValue={listing?.lotSize} onChange={handleChange} />
+                                <input className="border-gray-500 border 2px" type="number" placeholder="" name="lotSize" defaultValue={listing?.lotSize} onChange={handleChange} />
                             </div>
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Area(Sq.Ft)</h2>
-                                <input type="number" placeholder="Ex.1900" name="area" defaultValue={listing?.area} onChange={handleChange} />
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex.1900" name="area" defaultValue={listing?.area} onChange={handleChange} />
                             </div>
 
                         </div>
@@ -245,11 +280,11 @@ function EditListing() {
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Selling Price($)</h2>
-                                <input type="number" placeholder="400000" name="price" defaultValue={listing?.price} onChange={handleChange} />
+                                <input className="border-gray-500 border 2px" type="number" placeholder="400000" name="price" defaultValue={listing?.price} onChange={handleChange} />
                             </div>
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">HOA (Per Month)($)</h2>
-                                <input type="number" placeholder="100" name="hoa" defaultValue={listing?.hoa} onChange={handleChange} />
+                                <input className="border-gray-500 border 2px" type="number" placeholder="100" name="hoa" defaultValue={listing?.hoa} onChange={handleChange} />
                             </div>
 
                         </div>
@@ -257,7 +292,7 @@ function EditListing() {
                         <div className="grid grid-cols-1 gap-10">
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Description</h2>
-                                <textarea placeholder="" className="border-gray-500" name="description" defaultValue={listing?.description} onChange={handleChange} />
+                                <textarea placeholder=""  className="border-gray-500 border 2px" name="description" defaultValue={listing?.description} onChange={handleChange} />
                             </div>
                         </div>
 

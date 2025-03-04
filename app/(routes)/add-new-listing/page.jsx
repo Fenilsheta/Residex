@@ -6,6 +6,7 @@ import { supabase } from "utils/supabase/client";
 import { useUser } from "@clerk/nextjs";
 import { toast } from 'sonner';
 import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 
 function AddNewListing() {
   const [selectedAddress, setSelectedAddress] = useState();
@@ -24,9 +25,7 @@ function AddNewListing() {
         {
           address: selectedAddress?.label,
           coordinates: coordinates,
-          createdBy: user?.primaryEmailAddress?.emailAddress, // ✅ Track property owner
-          active: false,
-          created_at: new Date().toISOString(),
+          createdBy: user?.primaryEmailAddress?.emailAddress
         },
       ])
       .select();
@@ -60,7 +59,8 @@ function AddNewListing() {
             disabled={!selectedAddress || !coordinates || loader}
             onClick={nextHandler}
           >
-            Submit
+            {loader?<Loader className="animate-spin"/>:'Next'}
+            
           </Button>
         </div>
       </div>

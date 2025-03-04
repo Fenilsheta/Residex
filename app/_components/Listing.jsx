@@ -41,7 +41,7 @@ function Listing({listing,handleSearchClick,searchedAddress,setBedCount,setBathC
                     return (
                         <Link href={'/view-listing/' +item?.id}>
                         <div key={index} className='p-3 hover:border hover:border-primary cursor-pointer rounded-lg '>
-                            <Image src={item.listingImages[0].url}
+                            <Image src={item?.listingImages?.[0]?.url}
                                 width={800}
                                 height={150}
                                 alt='images'
