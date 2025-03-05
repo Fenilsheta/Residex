@@ -29,6 +29,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 
+const amenitiesList = [
+    "Air Conditioning", "Barbeque", "Dryer", "Gym", "Laundry",
+    "Lawn", "Microwave", "Outdoor Shower", "Refrigerator", "Sauna",
+    "Swimming Pool", "TV Cable", "Washer", "WiFi", "Window Coverings"
+  ];
+
 function EditListing() {
   const params = useParams();
   const { user } = useUser();
@@ -38,6 +44,15 @@ function EditListing() {
   const [loading, setLoading] = useState(false);
   const [userRole, setUserRole] = useState(null);
   const [listingCount, setListingCount] = useState(0);
+  const [selectedAmenities, setSelectedAmenities] = useState([]);
+
+  const handleCheckboxChange = (amenity) => {
+    if (selectedAmenities.includes(amenity)) {
+      setSelectedAmenities(selectedAmenities.filter((item) => item !== amenity));
+    } else {
+      setSelectedAmenities([...selectedAmenities, amenity]);
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -286,6 +301,27 @@ function EditListing() {
                                 <h2 className="text-gray-500">HOA (Per Month)($)</h2>
                                 <input className="border-gray-500 border 2px" type="number" placeholder="100" name="hoa" defaultValue={listing?.hoa} onChange={handleChange} />
                             </div>
+
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-10">
+                            <div className="flex gap-2 flex-col">
+                            <h2 className="text-lg text-slate-500">Select Amenities</h2>
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                                {amenitiesList.map((amenity) => (
+                                    <label key={amenity} className="flex gap-2 items-center">
+                                        <input
+                                            type="checkbox"
+                                            checked={selectedAmenities.includes(amenity)}
+                                            onChange={() => handleCheckboxChange(amenity)}
+                                            defaultValue={listing?.amenities}
+                                        />
+                                        {amenity}
+                                    </label>
+                                ))}
+                            </div>
+                            </div>
+                           
 
                         </div>
 
