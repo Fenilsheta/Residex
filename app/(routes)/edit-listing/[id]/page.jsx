@@ -99,6 +99,7 @@ function EditListing() {
 
     console.log("✅ Listing Fetched:", data);
     setListing(data);
+    setSelectedAmenities(data.amenities ? JSON.parse(data.amenities) : []);
   };
 
   /** ✅ Check If User Can Post a Listing */
@@ -109,18 +110,27 @@ function EditListing() {
     return false;
   };
 
+//   const updatedFormValue = {
+//     ...formValue,
+//     amenities: selectedAmenities, // Store amenities in database
+// };
+
   /** ✅ Handle Listing Submission */
   const onSubmitHandler = async (formValue) => {
     if (!canPostListing()) {
       toast.error("🚫 You have reached your listing limit!");
       return;
     }
+    const updatedFormValue = {
+        ...formValue,
+        amenities: selectedAmenities, // Store amenities in database
+    };
 
     setLoading(true);
 
     const { data, error } = await supabase
       .from("listing")
-      .update(formValue)
+      .update(updatedFormValue)
       .eq('id', params.id)
       .select();
 
