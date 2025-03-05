@@ -99,7 +99,7 @@ function EditListing() {
 
     console.log("✅ Listing Fetched:", data);
     setListing(data);
-    setSelectedAmenities(data.amenities ? JSON.parse(data.amenities) : []);
+    setSelectedAmenities(data.amenities || []); // Load amenities
   };
 
   /** ✅ Check If User Can Post a Listing */
@@ -110,90 +110,83 @@ function EditListing() {
     return false;
   };
 
-//   const updatedFormValue = {
-//     ...formValue,
-//     amenities: selectedAmenities, // Store amenities in database
-// };
 
   /** ✅ Handle Listing Submission */
   const onSubmitHandler = async (formValue) => {
     if (!canPostListing()) {
-      toast.error("🚫 You have reached your listing limit!");
-      return;
+        toast.error("🚫 You have reached your listing limit!");
+        return;
     }
-    const updatedFormValue = {
-        ...formValue,
-        amenities: selectedAmenities, // Store amenities in database
-    };
 
     setLoading(true);
 
+    const updatedFormValue = {
+        ...formValue,
+        amenities: selectedAmenities.length > 0 ? selectedAmenities : null, // Set NULL if empty
+    };
+
+    // ✅ Update Listing in Database
     const { data, error } = await supabase
-      .from("listing")
-      .update(updatedFormValue)
-      .eq('id', params.id)
-      .select();
+        .from("listing")
+        .update(updatedFormValue)
+        .eq('id', params.id)
+        .select();
 
     if (error) {
-        console.log(error);
-      setLoading(false);
-      toast.error("❌ Error adding property.");
-      return;
+        console.error("❌ Error updating property:", error);
+        setLoading(false);
+        toast.error("❌ Error updating property.");
+        return;
     }
 
-    console.log("✅ Listing Added:", data);
-    toast.success("🎉 Property added successfully!");
+    console.log("✅ Listing Updated:", data);
+    toast.success("🎉 Property updated successfully!");
 
+    // ✅ Upload Images
     for (const image of images) {
         setLoading(true);
         const file = image;
         const fileName = Date.now().toString();
-        const fileExt = fileName.split('.').pop();
-        const { data, error } = await supabase.storage
+        const fileExt = file.name.split('.').pop(); // Fix filename extraction
+        const { data: imageData, error: imageError } = await supabase.storage
             .from('listingImages')
-            .upload(`${fileName}`, file, {
+            .upload(`${fileName}.${fileExt}`, file, {
                 contentType: `image/${fileExt}`,
                 upsert: false
             });
 
-        if (error) {
-            setLoading(false);
-            console.error(error);
-            toast('Error while uploading images')
+        if (imageError) {
+            console.error("❌ Image Upload Error:", imageError);
+            toast.error("Error uploading images");
+            continue; // Continue to next image
         }
-        else {
-            const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL + fileName;
 
-            const { data, error } = await supabase
-                .from('listingImages')
-                .insert([
-                    { url: imageUrl, listing_id: params?.id }
-                ])
-                .select();
+        const imageUrl = process.env.NEXT_PUBLIC_IMAGE_URL + fileName + "." + fileExt;
 
-            if (error) {
-                setLoading(false);
-            }
-        }
+        await supabase
+            .from('listingImages')
+            .insert([{ url: imageUrl, listing_id: params?.id }])
+            .select();
+        
         setLoading(false);
     }
 
-
+    // ✅ ONLY UPDATE LISTING COUNT IF PROPERTY WAS POSTED SUCCESSFULLY
     const updatedCount = listingCount + 1;
 
-    // ✅ Update Listing Count in Admin Table
     const { error: updateError } = await supabase
-      .from("admin")
-      .update({ listing_count: updatedCount })
-      .eq("email", user?.primaryEmailAddress?.emailAddress);
+        .from("admin")
+        .update({ listing_count: updatedCount })
+        .eq("email", user?.primaryEmailAddress?.emailAddress);
 
     if (updateError) {
-      console.error("❌ Error updating listing count:", updateError);
+        console.error("❌ Error updating listing count:", updateError);
     }
 
     setLoading(false);
     router.push("/edit-listing/" + data[0].id);
-  };
+};
+
 
   /** ✅ Handle Publish Listing */
   const publishBtnHandler = async () => {
