@@ -85,13 +85,10 @@ function Details({ listingDetail }) {
 
       <div>
 
-        <h2 className='text-2xl font-bold'>Virtual Tour</h2>
+        <h2 className='text-2xl font-bold'>Amenities</h2>
 
 
-        {/* <video width="100%" height="auto" controls>
-          <source src={} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video> */}
+       
       </div>
 
     </div>
