@@ -104,10 +104,10 @@ function UserListing() {
                         <Image
                             src={item?.listingImages[0] ? item?.listingImages[0]?.url : '/placeholder.svg'}
                             width={800}
-                            height={200}
+                            height={180}
                             alt='images'
                             unoptimized={true}
-                            className='rounded-lg object-cover h-[170px]'
+                            className='rounded-lg object-cover h-[200px]'
                         />
                         <div className='flex mt-2 flex-col gap-2'>
                             <h2 className='font-bold text-xl'>$ {item?.price}</h2>
