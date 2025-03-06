@@ -122,10 +122,15 @@ function EditListing() {
 
     const updatedFormValue = {
         ...formValue,
-        amenities: selectedAmenities.length > 0 ? selectedAmenities : null, // Set NULL if empty
+        amenities: selectedAmenities.length > 0 ? selectedAmenities : null,
+        configuration: formValue.configuration || null,
+        developer: formValue.developer || null,
+        projectSize: formValue.projectSize || null,
+        floors: formValue.floors || null,
+        landParcel: formValue.landParcel || null,
+
     };
 
-    // ✅ Update Listing in Database
     const { data, error } = await supabase
         .from("listing")
         .update(updatedFormValue)
@@ -263,6 +268,23 @@ function EditListing() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                             <div className="flex gap-2 flex-col">
+                                <h2 className="text-gray-500">Developer Name</h2>
+                                <input className="border-gray-500 border 2px" type="text" placeholder="Ex. John Doe" name="developer" defaultValue={listing?.developer} onChange={handleChange}
+                                />
+                            </div>
+                            <div className="flex gap-2 flex-col">
+                                <h2 className="text-gray-500">Project Size</h2>
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex. 2 Tower/Units" name="projectSize" defaultValue={listing?.projectSize} onChange={handleChange} />
+                            </div>
+                            <div className="flex gap-2 flex-col">
+                                <h2 className="text-gray-500">Floors</h2>
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex. 4" name="floors" defaultValue={listing?.floors} onChange={handleChange} />
+                            </div>
+
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                            <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Bedroom</h2>
                                 <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="bedroom" defaultValue={listing?.bedroom}
                                     onChange={handleChange}
@@ -276,6 +298,24 @@ function EditListing() {
                                 <h2 className="text-gray-500">Built In</h2>
                                 <input className="border-gray-500 border 2px" type="number" placeholder="Ex.1900 Sq.ft" name="builtIn" defaultValue={listing?.builtIn} onChange={handleChange} />
                             </div>
+
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                            <div className="flex gap-2 flex-col">
+                                <h2 className="text-gray-500">Land Parcel</h2>
+                                <input className="border-gray-500 border 2px" type="text" placeholder="Ex. 2 Acres" name="landParcel" defaultValue={listing?.landParcel}
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            {/* <div className="flex gap-2 flex-col">
+                                <h2 className="text-gray-500">Bathroom</h2>
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="bathroom" defaultValue={listing?.bathroom} onChange={handleChange} />
+                            </div>
+                            <div className="flex gap-2 flex-col">
+                                <h2 className="text-gray-500">Built In</h2>
+                                <input className="border-gray-500 border 2px" type="number" placeholder="Ex.1900 Sq.ft" name="builtIn" defaultValue={listing?.builtIn} onChange={handleChange} />
+                            </div> */}
 
                         </div>
 
@@ -303,6 +343,10 @@ function EditListing() {
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">HOA (Per Month)($)</h2>
                                 <input className="border-gray-500 border 2px" type="number" placeholder="100" name="hoa" defaultValue={listing?.hoa} onChange={handleChange} />
+                            </div>
+                            <div className="flex gap-2 flex-col">
+                                <h2 className="text-gray-500">Configuration</h2>
+                                <input className="border-gray-500 border 2px" type="text" placeholder="1, 2, 3..." name="configuration" defaultValue={listing?.configuration} onChange={handleChange} />
                             </div>
 
                         </div>
