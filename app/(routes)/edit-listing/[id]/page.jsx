@@ -308,14 +308,14 @@ function EditListing() {
                                     onChange={handleChange}
                                 />
                             </div>
-                            {/* <div className="flex gap-2 flex-col">
+                            <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Bathroom</h2>
                                 <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="bathroom" defaultValue={listing?.bathroom} onChange={handleChange} />
                             </div>
                             <div className="flex gap-2 flex-col">
                                 <h2 className="text-gray-500">Built In</h2>
                                 <input className="border-gray-500 border 2px" type="number" placeholder="Ex.1900 Sq.ft" name="builtIn" defaultValue={listing?.builtIn} onChange={handleChange} />
-                            </div> */}
+                            </div>
 
                         </div>
 
