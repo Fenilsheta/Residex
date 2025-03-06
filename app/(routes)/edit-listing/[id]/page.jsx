@@ -123,14 +123,14 @@ function EditListing() {
     const updatedFormValue = {
         ...formValue,
         amenities: selectedAmenities.length > 0 ? selectedAmenities : null,
-        configuration: formValue.configuration || null,
-        developer: formValue.developer || null,
-        projectSize: formValue.projectSize || null,
-        floors: formValue.floors || null,
-        landParcel: formValue.landParcel || null,
-        possesion: formValue.possesion || null,
-        reraNumber: formValue.reraNumber || null,
-        pdpPhone: formValue.pdpPhone || null,
+        configuration: formValue.configuration ? formValue.configuration : null,
+        developer: formValue.developer ? formValue.developer : null,
+        projectSize: formValue.projectSize ? formValue.projectSize : null,
+        floors: formValue.floors ? formValue.floors : null,
+        landParcel: formValue.landParcel ? formValue.landParcel : null,
+        possesion: formValue.possesion ? formValue.possesion : null,
+        reraNumber: formValue.reraNumber ? formValue.reraNumber : null,
+        pdpPhone: formValue.pdpPhone ? formValue.pdpPhone : null,
 
     };
 
