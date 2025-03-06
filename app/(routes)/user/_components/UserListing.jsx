@@ -95,7 +95,7 @@ function UserListing() {
     return (
         <div>
             <h2 className='font-bold text-2xl'>Manage Your Listing</h2>
-            <div className='relative grid grid-cols-1 md:grid-cols-3 gap-3'>
+            <div className='relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3'>
                 {listing && listing.map((item, index) => (
                     <div key={index} className='p-3 hover:border hover:border-primary cursor-pointer rounded-lg '>
                         <h2 className='bg-primary m-1 rounded-lg text-white absolute px-2 text-sm p-1'>

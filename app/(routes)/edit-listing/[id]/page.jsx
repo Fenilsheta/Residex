@@ -307,7 +307,7 @@ function EditListing() {
 
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-10">
+                        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-10">
                             <div className="flex gap-2 flex-col">
                             <h2 className="text-lg text-slate-500">Select Amenities</h2>
                             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
