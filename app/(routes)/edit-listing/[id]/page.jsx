@@ -113,10 +113,7 @@ function EditListing() {
 
   /** ✅ Handle Listing Submission */
   const onSubmitHandler = async (formValue) => {
-    // if (!canPostListing()) {
-    //     toast.error("🚫 You have reached your listing limit!");
-    //     return;
-    // }
+ 
 
     setLoading(true);
 
