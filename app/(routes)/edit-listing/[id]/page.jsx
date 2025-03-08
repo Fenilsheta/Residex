@@ -301,16 +301,16 @@ function EditListing() {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Developer Name</h2>
-                                    <input className="border-gray-500 border 2px" type="text" placeholder="Ex. John Doe" name="developer" defaultValue={listing?.developer} onChange={handleChange}
+                                    <input className="border-gray-500 rounded-md border 2px" type="text" placeholder="Ex. John Doe" name="developer" defaultValue={listing?.developer} onChange={handleChange}
                                     />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Project Size</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="Ex. 2 Tower/Units" name="projectSize" defaultValue={listing?.projectSize} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="Ex. 2 Tower/Units" name="projectSize" defaultValue={listing?.projectSize} onChange={handleChange} />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Floors</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="Ex. 4" name="floors" defaultValue={listing?.floors} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="Ex. 4" name="floors" defaultValue={listing?.floors} onChange={handleChange} />
                                 </div>
 
                             </div>
@@ -318,17 +318,17 @@ function EditListing() {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Bedroom</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="bedroom" defaultValue={listing?.bedroom}
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="Ex.2" name="bedroom" defaultValue={listing?.bedroom}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Bathroom</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="bathroom" defaultValue={listing?.bathroom} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="Ex.2" name="bathroom" defaultValue={listing?.bathroom} onChange={handleChange} />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Built In</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="Ex.1900 Sq.ft" name="builtIn" defaultValue={listing?.builtIn} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="Ex.1900 Sq.ft" name="builtIn" defaultValue={listing?.builtIn} onChange={handleChange} />
                                 </div>
 
                             </div>
@@ -336,17 +336,17 @@ function EditListing() {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Land Parcel</h2>
-                                    <input className="border-gray-500 border 2px" type="text" placeholder="Ex. 2 Acres" name="landParcel" defaultValue={listing?.landParcel}
+                                    <input className="border-gray-500 rounded-md border 2px" type="text" placeholder="Ex. 2 Acres" name="landParcel" defaultValue={listing?.landParcel}
                                         onChange={handleChange}
                                     />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Possesion</h2>
-                                    <input className="border-gray-500 border 2px" type="date" name="possesion" defaultValue={listing?.possesion} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="date" name="possesion" defaultValue={listing?.possesion} onChange={handleChange} />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Rera Number</h2>
-                                    <input className="border-gray-500 border 2px" type="text" placeholder="Ex. 125-sfd...." name="reraNumber" defaultValue={listing?.reraNumber} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="text" placeholder="Ex. 125-sfd...." name="reraNumber" defaultValue={listing?.reraNumber} onChange={handleChange} />
                                 </div>
 
                             </div>
@@ -354,15 +354,15 @@ function EditListing() {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Parking</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="Ex.2" name="parking" defaultValue={listing?.parking} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="Ex.2" name="parking" defaultValue={listing?.parking} onChange={handleChange} />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Lot Size(Sq.Ft)</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="" name="lotSize" defaultValue={listing?.lotSize} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="" name="lotSize" defaultValue={listing?.lotSize} onChange={handleChange} />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Area(Sq.Ft)</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="Ex.1900" name="area" defaultValue={listing?.area} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="Ex.1900" name="area" defaultValue={listing?.area} onChange={handleChange} />
                                 </div>
 
                             </div>
@@ -370,15 +370,15 @@ function EditListing() {
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Selling Price($)</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="400000" name="price" defaultValue={listing?.price} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="400000" name="price" defaultValue={listing?.price} onChange={handleChange} />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Phone Number</h2>
-                                    <input className="border-gray-500 border 2px" type="number" placeholder="1234567890" name="pdpPhone" defaultValue={listing?.pdpPhone} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="number" placeholder="1234567890" name="pdpPhone" defaultValue={listing?.pdpPhone} onChange={handleChange} />
                                 </div>
                                 <div className="flex gap-2 flex-col">
                                     <h2 className="text-gray-500">Configuration</h2>
-                                    <input className="border-gray-500 border 2px" type="text" placeholder="1, 2, 3..." name="configuration" defaultValue={listing?.configuration} onChange={handleChange} />
+                                    <input className="border-gray-500 rounded-md border 2px" type="text" placeholder="1, 2, 3..." name="configuration" defaultValue={listing?.configuration} onChange={handleChange} />
                                 </div>
 
                             </div>
@@ -412,14 +412,14 @@ function EditListing() {
                                             placeholder="Place Name"
                                             value={item.name}
                                             onChange={(e) => handleConnectivityChange(index, "name", e.target.value)}
-                                            className="border p-2 rounded w-full"
+                                            className="border p-2 rounded-md w-full"
                                         />
                                         <input
                                             type="number"
                                             placeholder="Distance (km)"
                                             value={item.distance}
                                             onChange={(e) => handleConnectivityChange(index, "distance", e.target.value)}
-                                            className="border p-2 rounded w-full"
+                                            className="border p-2 rounded-md w-full"
                                         />
                                         <button
                                             type="button"
