@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@/components/ui/button';
-import { AlignRight, Bath, BedDouble, CarFront, Check, Drill, Home, LandPlot, MapPin, MapPinOff, Share } from 'lucide-react';
+import { AlignRight, Bath, BedDouble, Building2, CarFront, Check, Crosshair, Cuboid, Drill, Home, LandPlot, MapPin, MapPinOff, Proportions, Share, SquareCheckBig, SquareSquare } from 'lucide-react';
 import GoogleMapSection from 'app/_components/GoogleMapSection';
 import AgentDetail from './AgentDetail';
 import {
@@ -65,6 +65,42 @@ function Details({ listingDetail }) {
             rounded-lg p-3 text-primary justify-center'>
             <CarFront />
             {listingDetail?.parking} Parking
+          </h2>
+
+          <h2 className='flex gap-2 items-center bg-purple-100 
+            rounded-lg p-3 text-primary justify-center'>
+            <Cuboid />
+            {listingDetail?.configuration} BHK
+          </h2>
+
+          <h2 className='flex gap-2 items-center bg-purple-100 
+            rounded-lg p-3 text-primary justify-center'>
+            <Building2 />
+            {listingDetail?.projectSize} Tower/Unit
+          </h2>
+
+          <h2 className='flex gap-2 items-center bg-purple-100 
+            rounded-lg p-3 text-primary justify-center'>
+            <SquareSquare />
+            {listingDetail?.floors} Floors
+          </h2>
+
+          <h2 className='flex gap-2 items-center bg-purple-100 
+            rounded-lg p-3 text-primary justify-center'>
+            <Proportions />
+            {listingDetail?.landParcel} Acres
+          </h2>
+
+          <h2 className='flex gap-2 items-center bg-purple-100 
+            rounded-lg p-3 text-primary justify-center'>
+            <Crosshair />
+            {listingDetail?.possesion}
+          </h2>
+
+          <h2 className='flex gap-2 items-center bg-purple-100 
+            rounded-lg p-3 text-primary justify-center'>
+            <SquareCheckBig />
+            {listingDetail?.reraNumber}
           </h2>
 
         </div>
