@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@/components/ui/button';
-import { Bath, BedDouble, CarFront, Check, Drill, Home, LandPlot, MapPin, MapPinOff, Share } from 'lucide-react';
+import { AlignRight, Bath, BedDouble, CarFront, Check, Drill, Home, LandPlot, MapPin, MapPinOff, Share } from 'lucide-react';
 import GoogleMapSection from 'app/_components/GoogleMapSection';
 import AgentDetail from './AgentDetail';
 import {
@@ -123,7 +123,7 @@ function Details({ listingDetail }) {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-3">
             {listingDetail?.amenities.map((amenity, index) => (
               <div key={index} className="flex items-center gap-2 text-gray-700">
-                <Check className="text-green-500" />
+                <Check className="text-green-500" /> 
                 {amenity}
               </div>
             ))}
