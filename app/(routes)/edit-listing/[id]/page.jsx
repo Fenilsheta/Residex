@@ -227,8 +227,7 @@ function EditListing() {
 
         <Formik
             initialValues={{
-                type: '',
-                // propertyType: '',
+                type: listing?.type ||"",
                 profileImage: user?.imageUrl,
                 fullName: user?.fullName
 
@@ -242,7 +241,8 @@ function EditListing() {
             {({
                 values,
                 handleChange,
-                handleSubmit
+                handleSubmit,
+                setFieldValue,
             }) => (
                 <form onSubmit={handleSubmit}>
                     <div className='p-5 border rounded-lg shadow-md  grid gap-7 mt-6'>
@@ -250,7 +250,9 @@ function EditListing() {
                             <div className="flex flex-col gap-2">
                                 <h2 className="text-lg text-slate-500">Do you want to Rent it Sell it?</h2>
                                 <RadioGroup defaultValue={listing?.type}
-                                    onValueChange={(v) => values.type = v}>
+                                        value={values.type} 
+                                        onValueChange={(v) => {setFieldValue("type", v);}}
+                                    >
                                     <div className="flex items-center space-x-2">
                                         <RadioGroupItem value="Rent" id="Rent" />
                                         <Label htmlFor="Rent">Rent</Label>
