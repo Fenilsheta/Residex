@@ -114,7 +114,6 @@ function EditListing() {
   /** ✅ Handle Listing Submission */
   const onSubmitHandler = async (formValue) => {
  
-
     setLoading(true);
 
     const updatedFormValue = {
