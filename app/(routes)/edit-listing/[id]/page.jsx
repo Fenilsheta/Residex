@@ -121,18 +121,40 @@ function EditListing() {
     setLoading(true);
 
     const updatedFormValue = {
-        ...formValue,
-        amenities: selectedAmenities.length > 0 ? selectedAmenities : null,
-        configuration: formValue.configuration ? formValue.configuration : null,
-        developer: formValue.developer ? formValue.developer : null,
-        projectSize: formValue.projectSize ? formValue.projectSize : null,
-        floors: formValue.floors ? formValue.floors : null,
-        landParcel: formValue.landParcel ? formValue.landParcel : null,
-        possesion: formValue.possesion ? formValue.possesion : null,
-        reraNumber: formValue.reraNumber ? formValue.reraNumber : null,
-        pdpPhone: formValue.pdpPhone ? formValue.pdpPhone : null,
+        // ...formValue,
+        // amenities: selectedAmenities.length > 0 ? selectedAmenities : null,
+        // configuration: formValue.configuration ? formValue.configuration : null,
+        // developer: formValue.developer ? formValue.developer : null,
+        // projectSize: formValue.projectSize ? formValue.projectSize : null,
+        // floors: formValue.floors ? formValue.floors : null,
+        // landParcel: formValue.landParcel ? formValue.landParcel : null,
+        // possesion: formValue.possesion ? formValue.possesion : null,
+        // reraNumber: formValue.reraNumber ? formValue.reraNumber : null,
+        // pdpPhone: formValue.pdpPhone ? formValue.pdpPhone : null,
+
+        type: formValue.type !== undefined ? formValue.type : listing?.type,
+        propertyType: formValue.propertyType !== undefined ? formValue.propertyType : listing?.propertyType,
+        configuration: formValue.configuration !== undefined ? formValue.configuration : listing?.configuration,
+        developer: formValue.developer !== undefined ? formValue.developer : listing?.developer,
+        projectSize: formValue.projectSize !== undefined ? parseFloat(formValue.projectSize) : listing?.projectSize,
+        floors: formValue.floors !== undefined ? parseInt(formValue.floors) : listing?.floors,
+        landParcel: formValue.landParcel !== undefined ? parseFloat(formValue.landParcel) : listing?.landParcel,
+        possesion: formValue.possesion !== undefined ? formValue.possesion : listing?.possesion,
+        reraNumber: formValue.reraNumber !== undefined ? formValue.reraNumber : listing?.reraNumber,
+        pdpPhone: formValue.pdpPhone !== undefined ? formValue.pdpPhone : listing?.pdpPhone,
+        bedroom: formValue.bedroom !== undefined ? parseInt(formValue.bedroom) : listing?.bedroom,
+        bathroom: formValue.bathroom !== undefined ? parseInt(formValue.bathroom) : listing?.bathroom,
+        builtIn: formValue.builtIn !== undefined ? parseInt(formValue.builtIn) : listing?.builtIn,
+        parking: formValue.parking !== undefined ? parseInt(formValue.parking) : listing?.parking,
+        lotSize: formValue.lotSize !== undefined ? parseFloat(formValue.lotSize) : listing?.lotSize,
+        area: formValue.area !== undefined ? parseFloat(formValue.area) : listing?.area,
+        price: formValue.price !== undefined ? parseFloat(formValue.price) : listing?.price,
+        amenities: selectedAmenities.length > 0 ? selectedAmenities : listing?.amenities || null,
+
 
     };
+    console.log("🔍 Updated Form Data Before Sending:", updatedFormValue);
+
 
     const { data, error } = await supabase
         .from("listing")
