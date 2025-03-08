@@ -29,7 +29,7 @@ function Details({ listingDetail }) {
       <hr></hr>
       <div className='mt-4 flex flex-col gap-3'>
         <h2 className='font-bold text-2xl'>Key Features</h2>
-        <div className='grid grid-cols-2 md:grid-cols-3 gap-4'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-4'>
 
           <h2 className='flex gap-2 items-center bg-purple-100 
             rounded-lg p-3 text-primary justify-center'>
