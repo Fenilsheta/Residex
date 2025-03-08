@@ -1,8 +1,16 @@
 import React from 'react'
 import { Button } from '@/components/ui/button';
-import { Bath, BedDouble, CarFront, Check, Drill, Home, LandPlot, MapPin, Share } from 'lucide-react';
+import { Bath, BedDouble, CarFront, Check, Drill, Home, LandPlot, MapPin, MapPinOff, Share } from 'lucide-react';
 import GoogleMapSection from 'app/_components/GoogleMapSection';
 import AgentDetail from './AgentDetail';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+
 
 
 function Details({ listingDetail }) {
@@ -64,12 +72,12 @@ function Details({ listingDetail }) {
       </div>
 
       <div className='mt-4'>
-        <h2 className='text-2xl font-bold'>What's Special</h2>
+        <h2 className='text-2xl font-bold py-3'>What's Special</h2>
         <p className='text-gray-600'>{listingDetail?.description}</p>
       </div>
 
       <div>
-        <h2 className='text-2xl font-bold'>Find On Map</h2>
+        <h2 className='text-2xl font-bold py-3'>Find On Map</h2>
         <GoogleMapSection
           coordinates={listingDetail?.coordinates}
           listing={[listingDetail]}
@@ -77,15 +85,40 @@ function Details({ listingDetail }) {
       </div>
 
       <div>
+        <h2 className='text-2xl font-bold py-3'>Connectivity</h2>
+        {listingDetail?.connectivity && listingDetail?.connectivity.length > 0 ? (
+        <Carousel className="w-full">
+          <CarouselContent className="flex gap-4">
+            {listingDetail?.connectivity.map((connection, index) => (
+              <CarouselItem key={index} className="basis-72 ">
+                <div className="flex h-18 items-center gap-3 bg-purple-100 p-4 rounded-lg ">
+                  <MapPin className="text-primary" />
+                  <div className="flex flex-col">
+                    <h3 className="text-lg font-medium text-primary">{connection.name}</h3>
+                    <p className="text-gray-600 text-sm">{connection.distance} km away</p>
+                  </div>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
 
-        <h2 className='text-2xl font-bold'>Contact Agent</h2>
+          {/* Navigation Buttons */}
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      ) : (
+        <p className="text-gray-500 mt-2 flex items-center gap-2">
+          <MapPinOff className="text-red-500" /> No connectivity information available
+        </p>
+      )}
 
-        <AgentDetail listingDetail={listingDetail} />
+        
+       
+
       </div>
 
       <div>
-
-        <h2 className='text-2xl font-bold'>Amenities</h2>
+        <h2 className='text-2xl font-bold py-3'>Amenities</h2>
         {listingDetail?.amenities && listingDetail?.amenities.length > 0 ? (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-3">
             {listingDetail?.amenities.map((amenity, index) => (
@@ -98,8 +131,13 @@ function Details({ listingDetail }) {
         ) : (
           <p className="text-gray-500 mt-2">No amenities available</p>
         )}
+      </div>
 
-       
+      <div>
+
+        <h2 className='text-2xl font-bold py-3'>Contact Agent</h2>
+
+        <AgentDetail listingDetail={listingDetail} />
       </div>
 
     </div>
