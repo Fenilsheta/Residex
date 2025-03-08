@@ -121,16 +121,6 @@ function EditListing() {
     setLoading(true);
 
     const updatedFormValue = {
-        // ...formValue,
-        // amenities: selectedAmenities.length > 0 ? selectedAmenities : null,
-        // configuration: formValue.configuration ? formValue.configuration : null,
-        // developer: formValue.developer ? formValue.developer : null,
-        // projectSize: formValue.projectSize ? formValue.projectSize : null,
-        // floors: formValue.floors ? formValue.floors : null,
-        // landParcel: formValue.landParcel ? formValue.landParcel : null,
-        // possesion: formValue.possesion ? formValue.possesion : null,
-        // reraNumber: formValue.reraNumber ? formValue.reraNumber : null,
-        // pdpPhone: formValue.pdpPhone ? formValue.pdpPhone : null,
 
         type: formValue.type !== undefined ? formValue.type : listing?.type,
         propertyType: formValue.propertyType !== undefined ? formValue.propertyType : listing?.propertyType,
@@ -247,6 +237,7 @@ function EditListing() {
                 fullName: user?.fullName
 
             }}
+            enableReinitialize={true}
             onSubmit={(values) => {
                 
                 onSubmitHandler(values);
