@@ -242,7 +242,7 @@ function EditListing() {
         <Formik
             initialValues={{
                 type: '',
-                propertyType: '',
+                // propertyType: '',
                 profileImage: user?.imageUrl,
                 fullName: user?.fullName
 
