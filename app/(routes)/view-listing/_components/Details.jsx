@@ -108,7 +108,7 @@ function Details({ listingDetail }) {
         </Carousel>
       ) : (
         <p className="text-gray-500 mt-2 flex items-center gap-2">
-          <MapPinOff className="text-red-500" /> No connectivity information available
+          <MapPinOff className="text-gray-500" /> No connectivity available
         </p>
       )}
 
