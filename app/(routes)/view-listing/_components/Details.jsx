@@ -10,10 +10,24 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { toast } from 'sonner';
 
 
 
 function Details({ listingDetail }) {
+
+  const sharePage = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: document.title, 
+        text: "Check this out!", 
+        url: window.location.href, 
+      })
+    } else {
+      alert("Sharing not supported in this browser.");
+    }
+  };
+
   return listingDetail && (
     <div className="my-6 flex gap-2 flex-col">
       <div className="flex justify-between items-center">
@@ -23,7 +37,7 @@ function Details({ listingDetail }) {
             <MapPin /> {listingDetail?.address}
           </h2>
         </div>
-        <Button className='flex gap-2'> <Share /> Share</Button>
+        <Button onClick={sharePage} className='flex gap-2'> <Share /> Share</Button>
       </div>
 
       <hr></hr>
@@ -123,33 +137,33 @@ function Details({ listingDetail }) {
       <div>
         <h2 className='text-2xl font-bold py-3'>Connectivity</h2>
         {listingDetail?.connectivity && listingDetail?.connectivity.length > 0 ? (
-        <Carousel className="w-full">
-          <CarouselContent className="flex gap-4">
-            {listingDetail?.connectivity.map((connection, index) => (
-              <CarouselItem key={index} className="basis-72 ">
-                <div className="flex h-18 items-center gap-3 bg-purple-100 p-4 rounded-lg ">
-                  <MapPin className="text-primary" />
-                  <div className="flex flex-col">
-                    <h3 className="text-lg font-medium text-primary">{connection.name}</h3>
-                    <p className="text-gray-600 text-sm">{connection.distance} km away</p>
+          <Carousel className="w-full">
+            <CarouselContent className="flex gap-4">
+              {listingDetail?.connectivity.map((connection, index) => (
+                <CarouselItem key={index} className="basis-72 ">
+                  <div className="flex h-18 items-center gap-3 bg-purple-100 p-4 rounded-lg ">
+                    <MapPin className="text-primary" />
+                    <div className="flex flex-col">
+                      <h3 className="text-lg font-medium text-primary">{connection.name}</h3>
+                      <p className="text-gray-600 text-sm">{connection.distance} km away</p>
+                    </div>
                   </div>
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
 
-          {/* Navigation Buttons */}
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
-      ) : (
-        <p className="text-gray-500 mt-2 flex items-center gap-2">
-          <MapPinOff className="text-gray-500" /> No connectivity available
-        </p>
-      )}
+            {/* Navigation Buttons */}
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        ) : (
+          <p className="text-gray-500 mt-2 flex items-center gap-2">
+            <MapPinOff className="text-gray-500" /> No connectivity available
+          </p>
+        )}
 
-        
-       
+
+
 
       </div>
 
@@ -159,7 +173,7 @@ function Details({ listingDetail }) {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mt-3">
             {listingDetail?.amenities.map((amenity, index) => (
               <div key={index} className="flex items-center gap-2 text-gray-700">
-                <Check className="text-green-500" /> 
+                <Check className="text-green-500" />
                 {amenity}
               </div>
             ))}
