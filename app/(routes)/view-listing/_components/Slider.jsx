@@ -78,4 +78,3 @@ function Slider({ imageList }) {
 }
 
 export default Slider;
- 
