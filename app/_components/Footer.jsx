@@ -28,7 +28,7 @@ function Footer() {
             <li className="hover:text-white transition"><a href="/">For Sale</a></li>
             <li className="hover:text-white transition"><a href="/rent">For Rent</a></li>
             <li className="hover:text-white transition"><a href="/">Agent Finder</a></li>
-            <li className="hover:text-white transition"><a href="/add-new-listing">Post Your Ad</a></li>
+            <li className="hover:text-white transition"><a href="/">Post Your Ad</a></li>
           </ul>
         </div>
 
