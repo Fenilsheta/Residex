@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@/components/ui/button';
-import { AlignRight, Bath, BedDouble, Building2, CarFront, Check, Crosshair, Cuboid, Drill, Home, LandPlot, MapPin, MapPinOff, Proportions, Share, SquareCheckBig, SquareSquare } from 'lucide-react';
+import {  Bath, BedDouble, Building2, CarFront, Check, Crosshair, Cuboid, Drill, Home, LandPlot, MapPin, MapPinOff, Proportions, Share, SquareCheckBig, SquareSquare } from 'lucide-react';
 import GoogleMapSection from 'app/_components/GoogleMapSection';
 import AgentDetail from './AgentDetail';
 import {
@@ -197,6 +197,13 @@ function Details({ listingDetail }) {
         <h2 className='text-2xl font-bold py-3'>Contact Agent</h2>
 
         <AgentDetail listingDetail={listingDetail} />
+      </div>
+      
+      <div>
+      <h2 className='text-2xl font-bold py-3'>Image Gallery</h2>
+
+      
+
       </div>
 
     </div>
