@@ -1,6 +1,7 @@
 "use client"
 import React from 'react'
 import Header from './_components/Header'
+import Footer from './_components/Footer'
 import { LoadScript } from '@react-google-maps/api'
 
 function Provider({ children }) {
@@ -14,6 +15,7 @@ function Provider({ children }) {
       <div className='mt-[90px]'>
         {children}
       </div>
+      <Footer/>
       </LoadScript>
     </div>
   )

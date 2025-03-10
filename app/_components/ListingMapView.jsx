@@ -4,6 +4,7 @@ import Listing from "./Listing"
 import GoogleMapSection from "./GoogleMapSection"
 import { supabase } from 'utils/supabase/client'
 import { toast } from 'sonner';
+import Footer from './Footer';
 
 function ListingMapView({type}) {
 
@@ -81,13 +82,17 @@ function ListingMapView({type}) {
             />
         </div>
 
-        <div className='fixed right-10 h-full md:w-[350px] lg:w-[450px] xl:w-[630px]'>
+        <div className='p-0 h-full md:w-[350px] lg:w-[450px] xl:w-[630px]'>
             <GoogleMapSection
             listing={listing}
             coordinates={coordinates}
             />
         </div>
+
+       
     </div>
+
+    
   )
 }
 

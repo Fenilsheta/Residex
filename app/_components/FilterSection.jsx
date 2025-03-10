@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { BathIcon, Bed, BedDouble, CarFront } from 'lucide-react'
+import { BathIcon, BedDouble, CarFront } from 'lucide-react'
 
 
 function FilterSection({setBedCount,setBathCount,setParkingCount,setHomeType}) {
