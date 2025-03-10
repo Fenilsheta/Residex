@@ -156,6 +156,7 @@ function EditListing() {
             price: formValue.price !== undefined ? parseFloat(formValue.price) : listing?.price,
             amenities: selectedAmenities.length > 0 ? selectedAmenities : listing?.amenities || null,
             connectivity: connectivity.length > 0 ? connectivity : listing?.connectivity || null,
+            propertyName: formValue.propertyName !== undefined ? formValue.propertyName : listing?.propertyName,
 
         };
         console.log("🔍 Updated Form Data Before Sending:", updatedFormValue);
@@ -295,6 +296,12 @@ function EditListing() {
                                         </SelectContent>
                                     </Select>
 
+                                </div>
+
+                                <div className="flex gap-2 flex-col">
+                                    <h2 className="text-gray-500">Property Name</h2>
+                                    <input className="border-gray-500 rounded-md border 2px" type="text" placeholder="Ex. Carslline The Villa" name="propertyName" defaultValue={listing?.propertyName} onChange={handleChange}
+                                    />
                                 </div>
                             </div>
 

@@ -5,7 +5,7 @@ import MarkerItem from "./MarkerItem"
 
 const containerStyle = {
     width: '100%',
-    height: '80vh',
+    height: '75vh',
     borderRadius:10
 };
 
@@ -41,14 +41,15 @@ function GoogleMapSection({coordinates,listing}) {
       }, [])
     
       return (
-        <div>
-        <GoogleMap
+        <div className='sm:h-1/5'>
+        <GoogleMap 
           mapContainerStyle={containerStyle}
           center={center}
           zoom={12}
           onLoad={onLoad}
           onUnmount={onUnmount}
           gestureHandling="greedy"
+          
         >
           {/* Child components, such as markers, info windows, etc. */}
           {listing.map((item,index)=>(
