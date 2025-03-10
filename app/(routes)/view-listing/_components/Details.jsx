@@ -19,9 +19,9 @@ function Details({ listingDetail }) {
   const sharePage = () => {
     if (navigator.share) {
       navigator.share({
-        title: document.title, 
-        text: "Check this out!", 
-        url: window.location.href, 
+        title: document.title,
+        text: "Check this out!",
+        url: window.location.href,
       })
     } else {
       alert("Sharing not supported in this browser.");
@@ -30,15 +30,24 @@ function Details({ listingDetail }) {
 
   return listingDetail && (
     <div className="my-6 flex gap-2 flex-col">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center bg-white ">
         <div>
-          <h2 className="text-3xl font-bold">$ {listingDetail?.price}</h2>
-          <h2 className="text-gray-500 flex gap-2 text-lg">
-            <MapPin /> {listingDetail?.address}
+          <h2 className="text-4xl font-extrabold text-gray-800">{listingDetail?.propertyName}</h2>
+          <h2 className="text-3xl font-semibold text-primary mt-1">$ {listingDetail?.price.toLocaleString()}</h2>
+          <h2 className="text-gray-500 flex gap-2 text-lg mt-2 items-center">
+            <MapPin className="text-primary w-5 h-5" />
+            {listingDetail?.address}
           </h2>
         </div>
-        <Button onClick={sharePage} className='flex gap-2'> <Share /> Share</Button>
+
+        <Button
+          onClick={sharePage}
+          className="flex gap-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg hover:scale-105 transition-all duration-300"
+        >
+          <Share className="w-5 h-5" /> Share
+        </Button>
       </div>
+
 
       <hr></hr>
       <div className='mt-4 flex flex-col gap-3'>
