@@ -102,16 +102,16 @@ function Header() {
         <Image src={"/Realtyx.svg"} width={150} height={150} alt="logo" />
         <ul className="hidden md:flex gap-10">
           <Link href={"/"}>
-            <li className={`hover:text-primary font-medium text-sm cursor-pointer ${path === "/" && "text-primary"}`}>
+            <li className={`hover:text-primary font-medium text-lg cursor-pointer ${path === "/" && "text-primary"}`}>
               For Sell
             </li>
           </Link>
           <Link href={"/rent"}>
-            <li className={`hover:text-primary font-medium text-sm cursor-pointer ${path === "/rent" && "text-primary"}`}>
+            <li className={`hover:text-primary font-medium text-lg cursor-pointer ${path === "/rent" && "text-primary"}`}>
               For Rent
             </li>
           </Link>
-          <li className="hover:text-primary font-medium text-sm cursor-pointer">Agent Finder</li>
+          <li className={`hover:text-primary font-medium text-lg cursor-pointer ${path === "/rent" && "text-primary"}`}>Agent Finder</li>
         </ul>
       </div>
 
