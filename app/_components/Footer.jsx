@@ -36,15 +36,15 @@ function Footer() {
           <h3 className="text-lg font-semibold text-primary">Contact Us</h3>
           <ul className="mt-3 space-y-3 text-gray-300">
             <li className="flex items-center gap-3">
-              <MapPin size={18} className="text-purple-400" />
+              <MapPin size={18} className="text-primary" />
               123 Main Street, New York, USA
             </li>
             <li className="flex items-center gap-3">
-              <Phone size={18} className="text-purple-400" />
+              <Phone size={18} className="text-primary" />
               +1 234 567 890
             </li>
             <li className="flex items-center gap-3">
-              <Mail size={18} className="text-purple-400" />
+              <Mail size={18} className="text-primary" />
               realtyx@gmail.com
             </li>
           </ul>
