@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button';
 import {  Bath, BedDouble, Building2, CarFront, Check, Crosshair, Cuboid, Drill, Home, LandPlot, MapPin, MapPinOff, Proportions, Share, SquareCheckBig, SquareSquare } from 'lucide-react';
 import GoogleMapSection from 'app/_components/GoogleMapSection';
@@ -9,12 +9,38 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-import { toast } from 'sonner';
+} from "@/components/ui/carousel";
+import { supabase } from 'utils/supabase/client';
+import Image from 'next/image';
+
 
 
 
 function Details({ listingDetail }) {
+
+  const [imageList, setImageList] = useState(); 
+
+
+  useEffect(() => {
+    async function fetchImages() {
+      if (!listingDetail?.id) return;
+
+      const { data, error } = await supabase
+        .from("listingImages") 
+        .select("url") 
+        .eq("listing_id", listingDetail.id); 
+
+      if (error) {
+        console.error("Error fetching images:", error);
+      } else {
+        setImageList(data); 
+      }
+    }
+
+    fetchImages();
+  }, [listingDetail?.id]);
+
+
 
   const sharePage = () => {
     if (navigator.share) {
@@ -136,7 +162,7 @@ function Details({ listingDetail }) {
       </div>
 
       <div>
-        <h2 className='text-2xl font-bold py-3'>Find On Map</h2>
+        <h2 className='text-2xl font-bold py-3'><span className='text-primary'>{listingDetail?.propertyName}</span> Location Advantage</h2>
         <GoogleMapSection
           coordinates={listingDetail?.coordinates}
           listing={[listingDetail]}
@@ -199,12 +225,30 @@ function Details({ listingDetail }) {
         <AgentDetail listingDetail={listingDetail} />
       </div>
       
+     
+
       <div>
-      <h2 className='text-2xl font-bold py-3'>Image Gallery</h2>
-
-      
-
+        <h2 className="text-2xl font-bold py-3">Image Gallery</h2>
+        {imageList && imageList.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+            {imageList.map((item, index) => (
+              <div key={index} className="relative overflow-hidden rounded-lg shadow-lg">
+                <Image
+                  src={item.url}
+                  width={500}
+                  height={400}
+                  alt={`listing-image-${index}`}
+                  className="object-cover w-full h-48 rounded-lg hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-gray-500">No images available</p>
+        )}
       </div>
+
+     
 
     </div>
   );
