@@ -42,7 +42,7 @@ function Details({ listingDetail }) {
 
         <Button
           onClick={sharePage}
-          className="flex gap-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-6 py-3 rounded-lg shadow-lg hover:scale-105 transition-all duration-300"
+          className="flex text-1xl gap-3 w-32 h-11 rounded-lg "
         >
           <Share className="w-5 h-5" /> Share
         </Button>
