@@ -111,7 +111,7 @@ function Header() {
               For Rent
             </li>
           </Link>
-          <li className={`hover:text-primary font-medium text-lg cursor-pointer ${path === "/rent" && "text-primary"}`}>Agent Finder</li>
+          <li className="hover:text-primary font-medium text-lg cursor-pointer">Agent Finder</li>
         </ul>
       </div>
 
