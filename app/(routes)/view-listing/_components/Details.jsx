@@ -58,8 +58,8 @@ function Details({ listingDetail }) {
     <div className="my-6 flex gap-2 flex-col">
       <div className="flex justify-between items-center bg-white ">
         <div>
-          <h2 className="text-4xl font-extrabold text-gray-800">{listingDetail?.propertyName}</h2>
-          <h2 className="text-3xl font-semibold text-primary mt-1">$ {new Intl.NumberFormat('en-IN').format(listingDetail?.price)} </h2>
+          <h2 className="text-4xl font-extrabold text-gray-900">{listingDetail?.propertyName}</h2>
+          <h2 className="text-2xl font-semibold text-primary mt-1">$ {new Intl.NumberFormat('en-IN').format(listingDetail?.price)} </h2>
           <h2 className="text-gray-500 flex gap-2 text-lg mt-2 items-center">
             <MapPin className="text-primary w-5 h-5" />
             {listingDetail?.address}
@@ -230,7 +230,7 @@ function Details({ listingDetail }) {
       <div>
         <h2 className="text-2xl font-bold py-3">Image Gallery</h2>
         {imageList && imageList.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 ">
             {imageList.map((item, index) => (
               <div key={index} className="relative overflow-hidden rounded-lg shadow-lg">
                 <Image
@@ -238,7 +238,7 @@ function Details({ listingDetail }) {
                   width={500}
                   height={400}
                   alt={`listing-image-${index}`}
-                  className="object-cover w-full h-48 rounded-lg hover:scale-105 transition-transform duration-300"
+                  className="object-cover  rounded-lg hover:scale-105 transition-transform duration-300"
                 />
               </div>
             ))}
