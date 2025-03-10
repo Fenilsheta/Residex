@@ -33,7 +33,7 @@ function Details({ listingDetail }) {
       <div className="flex justify-between items-center bg-white ">
         <div>
           <h2 className="text-4xl font-extrabold text-gray-800">{listingDetail?.propertyName}</h2>
-          <h2 className="text-3xl font-semibold text-primary mt-1">$ {listingDetail?.price.toLocaleString()}</h2>
+          <h2 className="text-3xl font-semibold text-primary mt-1">$ {new Intl.NumberFormat('en-IN').format(listingDetail?.price)} </h2>
           <h2 className="text-gray-500 flex gap-2 text-lg mt-2 items-center">
             <MapPin className="text-primary w-5 h-5" />
             {listingDetail?.address}
