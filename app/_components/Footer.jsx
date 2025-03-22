@@ -7,7 +7,7 @@ function Footer() {
       <div className="max-w-7xl mx-20 grid grid-cols-1 md:grid-cols-3 gap-32">
         
         <div>
-          <h2 className="text-2xl font-bold text-primary">RealtyX</h2>
+          <h2 className="text-2xl font-bold text-primary">ResideX</h2>
           <p className="text-gray-400 mt-3">Your trusted real estate partner to find the perfect property.</p>
           <div className="flex gap-4 mt-4">
             <a href="/" className="text-gray-300 hover:text-purple-400 transition">
@@ -54,7 +54,7 @@ function Footer() {
       </div>
 
       <div className="border-t border-gray-700 text-center text-gray-400 text-sm mt-8 pt-4">
-        © {new Date().getFullYear()} RealtyX. All Rights Reserved.
+        © {new Date().getFullYear()} ResideX. All Rights Reserved.
       </div>
     </footer>
   );
