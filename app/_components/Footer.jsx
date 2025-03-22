@@ -45,7 +45,7 @@ function Footer() {
             </li>
             <li className="flex items-center gap-3">
               <Mail size={18} className="text-primary" />
-              realtyx@gmail.com
+              residex@gmail.com
             </li>
           </ul>
         </div>
