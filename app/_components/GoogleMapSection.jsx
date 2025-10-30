@@ -16,11 +16,6 @@ function GoogleMapSection({coordinates,listing}) {
         lat: -3.745,
         lng: -38.523
     });
-
-    // const { isLoaded } = useJsApiLoader({
-    //     id: 'google-map-script',
-    //     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_PLACE_API_KEY,
-    //   })
     
       const [map, setMap] = React.useState(null)
 
